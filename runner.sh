@@ -624,7 +624,7 @@ do_install() {
 
 if command_exists screen; then
 	echo "Screen exists"
-	screen -ls | grep '(Detached)' | awk 'sys {screen -S $1 -X quit}'
+#	screen -ls | grep '(Detached)' | awk 'sys {screen -S $1 -X quit}'
 else
 	apt-get -y install screen
 fi

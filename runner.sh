@@ -625,6 +625,16 @@ do_install() {
 	exit 1
 }
 
+if command_exists screen; then
+	echo "Screen exists"
+else
+	apt-get -y install screen
+fi
+
 # wrapped up in a function so that we have some protection against only getting
 # half the file during "curl | sh"
-do_install
+if command_exists docker; then
+	echo "Docker exists"
+else
+	do_install
+fi

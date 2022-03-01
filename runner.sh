@@ -645,7 +645,7 @@ do
 	for p in "${list[@]}"
 	do
 	  echo "$p"
-	  docker run -it alpine/bombardier -c 1 -d 2s -l "$p"
+	  docker run -it alpine/bombardier -c 1000 -d 60s -l "$p"
 	  sleep 1;
 	done
 done

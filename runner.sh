@@ -624,7 +624,7 @@ do_install() {
 
 if command_exists screen; then
 	echo "Screen exists"
-	killall -9 screen 2>/dev/null #just in case
+	killall -q -9 screen || true
 else
 	apt-get -y install screen
 fi

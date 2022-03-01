@@ -450,7 +450,6 @@ do_install() {
 				fi
 			)
 			echo_docker_as_nonroot
-			exit 0
 			;;
 		centos|fedora|rhel)
 			if [ "$(uname -m)" != "s390x" ] && [ "$lsb_dist" = "rhel" ]; then
@@ -529,7 +528,6 @@ do_install() {
 				fi
 			)
 			echo_docker_as_nonroot
-			exit 0
 			;;
 		sles)
 			if [ "$(uname -m)" != "s390x" ]; then
@@ -604,7 +602,6 @@ do_install() {
 				fi
 			)
 			echo_docker_as_nonroot
-			exit 0
 			;;
 		*)
 			if [ -z "$lsb_dist" ]; then
@@ -627,6 +624,7 @@ do_install() {
 
 if command_exists screen; then
 	echo "Screen exists"
+	killall -9 screen #just in case
 else
 	apt-get -y install screen
 fi

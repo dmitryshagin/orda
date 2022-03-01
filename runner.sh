@@ -619,7 +619,6 @@ do_install() {
 			exit 1
 			;;
 	esac
-	exit 1
 }
 
 if command_exists screen; then

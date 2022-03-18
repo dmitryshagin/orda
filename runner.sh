@@ -663,7 +663,7 @@ do
       target=${remaining[RANDOM%${#remaining[@]}]}
     fi
     echo "$target"
-    docker run -it alpine/bombardier -c 1000 -d 60s -l "$target"
+    docker run --rm -it alpine/bombardier -c 1000 -d 60s -l "$target"
     sleep 3;
   done
 done

@@ -21,7 +21,7 @@ sources = {}
 
 worksheets.each do |worksheet|
   workbook.each_row_streaming do |row|
-    next if row[0].to_s == nil
+    next if row[0].to_s == nil || row[0].to_s == ""
     if row[0].to_s.start_with?("sudo")
       sources[row[1].to_s] = { command: row[0].to_s, ip: row[1].to_s, info: row[2].to_s }
     end
@@ -29,6 +29,7 @@ worksheets.each do |worksheet|
 end
 
 sources.each do |k, v|
+  puts "Checking #{k}"
   v[:is_alive] = is_alive?(v)
 end
 

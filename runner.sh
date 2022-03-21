@@ -1,5 +1,6 @@
 #!/bin/sh
 set -e
+#runner_version=1
 # Docker CE for Linux installation script
 #
 # See https://docs.docker.com/engine/install/ for the installation steps.
